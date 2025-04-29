@@ -12,8 +12,8 @@ module App
     config.load_defaults 6.1
 
     # lib ディレクトリをオートロードとイーガーロードの対象に追加
-    config.autoload_paths += %W(#{config.root}/lib)
-    config.eager_load_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W[#{config.root}/lib]
+    config.eager_load_paths += %W[#{config.root}/lib]
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -25,5 +25,13 @@ module App
 
     # 追加のパスをイーガーロードの対象にする (必要に応じて変更)
     # config.eager_load_paths << Rails.root.join("extras")
+  end
+end
+
+module ScheduleApp
+  class Application < Rails::Application
+    config.load_defaults 6.1
+    config.time_zone = "Tokyo"
+    config.active_record.default_timezone = :local
   end
 end
