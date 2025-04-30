@@ -1,6 +1,8 @@
+<h1>スケジュールを編集</h1>
 
-<h1>スケジュールの編集</h1>
-
-<%= render 'form', schedule: @schedule %>
+<%= form_with model: @schedule, local: true do |form| %>
+  <%= render 'form', form: form %>
+  <%= form.submit '更新' %>
+<% end %>
 
 <%= link_to '戻る', schedules_path %>

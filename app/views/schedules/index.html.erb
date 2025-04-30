@@ -1,34 +1,62 @@
-<h1>スケジュール一覧</h1>
+<!-- app/views/schedules/index.html.erb -->
 
-<p>本日の日付: <%= Date.current.strftime("%Y/%m/%d") %></p>
+<h1>予定一覧</h1>
+
+<p>本日の日付: <%= Time.zone.today.strftime("%Y/%m/%d") %></p>
 <p>予定の合計数: <%= @schedules.count %></p>
 
-<table>
-  <tr>
-    <th>ID</th>
-    <th>タイトル</th>
-    <th>開始日</th>
-    <th>終了日</th>
-    <th>終日</th>
-    <th>更新日時</th>
-    <th>操作</th>
-  </tr>
-
-  <% @schedules.each do |schedule| %>
+<table class="table table-striped">
+  <thead>
     <tr>
-      <td><%= schedule.id %></td>
-      <td><%= schedule.title %></td>
-      <td><%= schedule.start_date.strftime("%Y/%m/%d") %></td>
-      <td><%= schedule.end_date.strftime("%Y/%m/%d") %></td>
-      <td><%= schedule.all_day ? '○' : '' %></td>
-      <td><%= schedule.updated_at.strftime("%Y/%m/%d %H:%M") %></td>
-      <td>
-        <%= link_to '詳細', schedule %> |
-        <%= link_to '編集', edit_schedule_path(schedule) %> |
-        <%= link_to '削除', schedule, method: :delete, data: { confirm: '予定を削除しますか？' } %>
-      </td>
+      <th>ID</th>
+      <th>タイトル</th>
+      <th>開始日</th>
+      <th>終了日</th>
+      <th>終日</th>
+      <th>更新日時</th>
+      <th>操作</th>
     </tr>
-  <% end %>
+  </thead>
+  <tbody>
+    <% @schedules.each do |schedule| %>
+      <tr>
+        <td><%= schedule.id %></td>
+        <td><%= schedule.title %></td>
+        <td><%= schedule.start_date.strftime("%Y/%m/%d") %></td>
+        <td><%= schedule.end_date.strftime("%Y/%m/%d") %></td>
+        <td><%= schedule.all_day ? '○' : '' %></td>
+        <td><%= schedule.updated_at.strftime("%Y/%m/%d %H:%M") %></td>
+        <td>
+          <%= link_to '詳細', schedule_path(schedule), class: 'btn btn-info' %>
+          <%= link_to '編集', edit_schedule_path(schedule), class: 'btn btn-warning' %>
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-<%= schedule.id %>">
+            削除
+          </button>
+        </td>
+      </tr>
+
+      <!-- モーダル -->
+      <div class="modal fade" id="deleteModal-<%= schedule.id %>" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-<%= schedule.id %>" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel-<%= schedule.id %>">予定を削除しますか？</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              この操作は取り消せません。本当に削除してよろしいですか？
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+              <%= button_to '削除', schedule_path(schedule), method: :delete, class: "btn btn-danger" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </tbody>
 </table>
 
-<%= link_to '新しい予定を追加', new_schedule_path %>
+<%= link_to '新規追加', new_schedule_path, class: 'btn btn-primary' %>
