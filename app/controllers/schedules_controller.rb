@@ -18,25 +18,33 @@ class SchedulesController < ApplicationController
   def create
     @schedule = Schedule.new(schedule_params)
     if @schedule.save
-      redirect_to @schedule, notice: 'スケジュールが作成されました。'
+     redirect_to @schedule, notice: 'スケジュールが作成されました。'
     else
-      render :new
+     flash.now[:alert] = 'スケジュールの作成に失敗しました。'
+     render :new
     end
   end
 
+  
   def update
     if @schedule.update(schedule_params)
-      redirect_to @schedule, notice: 'スケジュールが更新されました。'
+     redirect_to @schedule, notice: 'スケジュールが更新されました。'
     else
-      render :edit
+     flash.now[:alert] = 'スケジュールの更新に失敗しました。'
+     render :edit
     end
   end
 
+  
   def destroy
     @schedule.destroy
     redirect_to schedules_url, notice: 'スケジュールが削除されました。'
   end
 
+  
+  
+  
+  
   private
 
   def set_schedule
@@ -47,3 +55,4 @@ class SchedulesController < ApplicationController
     params.require(:schedule).permit(:title, :start_date, :end_date, :all_day, :memo)
   end
 end
+

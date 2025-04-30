@@ -23,4 +23,25 @@
   </body>
 </html>
 
+<% if flash[:notice] %>
+  <p class="notice"><%= flash[:notice] %></p>
+<% end %>
+
+<% if flash[:alert] %>
+  <p class="alert"><%= flash[:alert] %></p>
+<% end %>
+
+
+<style>
+.notice {
+  color: green;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.alert {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+</style>
 
