@@ -1,0 +1,10 @@
+<h1>スケジュール詳細</h1>
+
+<p>タイトル: <%= @schedule.title %></p>
+<p>開始日: <%= @schedule.start_date.strftime('%Y/%m/%d') %></p>
+<p>終了日: <%= @schedule.end_date.strftime('%Y/%m/%d') %></p>
+<p>終日: <%= @schedule.all_day ? '○' : '' %></p>
+<p>メモ: <%= @schedule.memo %></p>
+
+<%= link_to '編集', edit_schedule_path(@schedule) %>
+<%= link_to '戻る', schedules_path %>

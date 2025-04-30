@@ -1,0 +1,8 @@
+<h1>新しいスケジュールを追加</h1>
+
+<%= form_with model: @schedule, local: true do |form| %>
+  <%= render 'form', form: form %>
+  <%= form.submit '保存' %>
+<% end %>
+
+<%= link_to '戻る', schedules_path %>

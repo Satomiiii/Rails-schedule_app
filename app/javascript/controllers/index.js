@@ -1,4 +1,5 @@
-// Import and register all your controllers from the importmap via controllers/**/*_controller
-import { application } from "controllers/application"
-import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
-eagerLoadControllersFrom("controllers", application)
+// Load all the channels within this directory and all subdirectories.
+// Channel files must be named *_channel.js.
+
+const channels = require.context('.', true, /_channel\.js$/)
+channels.keys().forEach(channels)
